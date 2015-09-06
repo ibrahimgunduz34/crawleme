@@ -2,8 +2,8 @@ import urllib2
 from lxml import html
 from urlparse import urlparse
 
-from crawler.conf import REQUEST_TIMEOUT, USER_AGENT
-from crawler.exceptions import RuntimeError, ConfigurationError
+from .conf import REQUEST_TIMEOUT, USER_AGENT
+from .exceptions import RuntimeError, ConfigurationError
 
 
 class BasePage(object):
@@ -26,11 +26,11 @@ class BasePage(object):
         return True
 
     def build_request_header(self):
-        return dict((
-            ('User-Agent', USER_AGENT)))
+        return dict(
+            [('User-Agent', USER_AGENT)])
 
     def fetch_content(self, timeout=REQUEST_TIMEOUT):
-        request = Request(self.url, headers=self.build_request_header())
+        request = urllib2.Request(self.url, headers=self.build_request_header())
         self.handler = urllib2.urlopen(request, timeout=timeout)
         self.content = self.handler.read()
         return self.content
@@ -48,7 +48,7 @@ class BasePage(object):
                 item_value or '%s%s' % (self.get_base_url(), item_value)
 
     def crawle(self, renew=False):
-        if renew or self.cnotent is None:
+        if renew or self.content is None:
             self.fetch_content()
         return self.parse_content()
 
