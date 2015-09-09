@@ -37,18 +37,20 @@ class BasePage(object):
 
     def get_base_url(self):
         parsed_url = urlparse(self.url)
-        return '%s://%s' % (parsed_url.scheme, parsed_url.hostname) 
+        return '%s://%s' % (parsed_url.scheme, parsed_url.hostname)
 
     def parse_content(self):
         items = html.fromstring(self.content).xpath(self.item_path)
         for item in items:
             item_value = item.get(self.item_attribute)
-            yield (item_value.startswith('http') or 
+            if not item_value:
+                continue
+            yield (item_value.startswith('http') or
                    item_value.startswith('https')) and \
                 item_value or '%s%s' % (self.get_base_url(), item_value)
 
     def crawle(self, renew=False, timeout=REQUEST_TIMEOUT):
         if renew or self.content is None:
-            self.fetch_content()
-        return self.parse_content(timeout=timeout)
+            self.fetch_content(timeout=timeout)
+        return self.parse_content()
 
