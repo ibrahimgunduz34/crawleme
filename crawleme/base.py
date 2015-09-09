@@ -47,8 +47,8 @@ class BasePage(object):
                    item_value.startswith('https')) and \
                 item_value or '%s%s' % (self.get_base_url(), item_value)
 
-    def crawle(self, renew=False):
+    def crawle(self, renew=False, timeout=REQUEST_TIMEOUT):
         if renew or self.content is None:
             self.fetch_content()
-        return self.parse_content()
+        return self.parse_content(timeout=timeout)
 
