@@ -31,7 +31,7 @@ http://www.mysite.com/bar/
 http://www.mysite.com/baz/
 ```
 
-Also, you can override url and item_path of wrapper class on creating class instance.
+Also, you can pass or override the url or item_path of wrapper class on creating class instance.
 ```python
 crawler = MyPage(url='http://www.mysite.com/id/112312')
 ```
