@@ -2,7 +2,8 @@ from multiprocessing import Pool, Manager
 from Queue import Empty
 
 from crawleme.base import BasePage
-import sys, os
+import traceback
+
 
 PROCESS_COUNT = 10
 REQUEST_TIMEOUT = 10
@@ -29,9 +30,7 @@ def start_crawling(url, queue, visited_pages):
             print _url
             queue.put(_url)
     except Exception, err:
-        exc_type, exc_obj, exc_tb = sys.exc_info()
-        fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-        print(exc_type, err, fname, exc_tb.tb_lineno)
+        print traceback.print_exc()
 
 
 def process_queue(queue, pool, visited_pages):
