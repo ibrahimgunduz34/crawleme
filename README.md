@@ -48,11 +48,11 @@ X-Path of selected DOM element(s).
 Attribute of selected DOM element(s).
 <br/>
 <br/>
-**has_only_single_item:**<br/>
+**has_only_single_item (default=False):**<br/>
 crawle method returns only single value when there is True
 <br/>
 <br/>
-**fix_urls:**<br/>
+**fix_urls (default=True):**<br/>
 Sometimes may be DOM object attributes contains only path value without hostname and protocol. This attributes fix the parsed value as full url.
 <br/>
 <br/>
